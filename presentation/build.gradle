@@ -1,0 +1,51 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'de.mannodermaus.android-junit5'
+}
+
+android {
+    compileSdkVersion rootProject.targetSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs += [
+                '-Xopt-in=kotlin.time.ExperimentalTime',
+                '-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi',
+                '-Xopt-in=kotlinx.coroutines.FlowPreview'
+        ]
+    }
+}
+
+dependencies {
+    implementation applicationDependencies.kotlin
+    implementation coroutineDependencies.core
+    implementation project(":domain")
+
+    implementation coroutineDependencies.orbitCore
+    implementation coroutineDependencies.orbitViewModel
+    implementation coroutineDependencies.core
+
+    implementation hiltAndroidDependencies.hiltAndroid
+    kapt hiltCompilers.hiltCompiler
+
+    testImplementation testDependencies.turbine
+    testImplementation testDependencies.jupiterApi
+    testImplementation testDependencies.jupiterParams
+    testImplementation testDependencies.coroutines
+    testImplementation testDependencies.assertJ
+    testImplementation testDependencies.mockitoKotlin
+    testRuntimeOnly testDependencies.jupiterEngine
+    testImplementation project(":domain-test")
+}
