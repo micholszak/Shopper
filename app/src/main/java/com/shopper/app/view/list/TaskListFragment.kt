@@ -9,12 +9,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shopper.app.R
 import com.shopper.app.databinding.FragmentTaskListBinding
-import com.shopper.app.presentation.list.TasksViewModel
-import com.shopper.app.presentation.list.model.TasksViewState
 import com.shopper.app.view.common.ScaleAnimation
 import com.shopper.app.view.common.adapter.ItemAdapter
 import com.shopper.app.view.common.binding.viewBinding
 import com.shopper.app.view.list.adapter.createTaskDelegate
+import com.shopper.app.view.list.model.TaskViewItem
+import com.shopper.presentation.products.TasksViewModel
+import com.shopper.presentation.products.model.TasksViewState
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator
 import kotlinx.coroutines.flow.collect
@@ -54,6 +55,8 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list) {
     }
 
     private fun render(state: TasksViewState) {
-        listAdapter?.items = state.tasks
+        listAdapter?.items = state.tasks.map { productView ->
+            TaskViewItem(title = productView.name)
+        }
     }
 }

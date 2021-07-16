@@ -1,11 +1,11 @@
-package com.shopper.app.presentation.addition
+package com.shopper.presentation.addition
 
-import com.shopper.app.InstantTaskExecutorExtension
-import com.shopper.app.presentation.addition.model.AddTaskSideEffect
-import com.shopper.app.presentation.addition.model.AddTaskViewState
 import com.shopper.domain.interactor.AddProduct
 import com.shopper.domain.model.AddProductResult
 import com.shopper.domain.test.TestDispatcherProvider
+import com.shopper.presentation.addition.model.AddTaskSideEffect
+import com.shopper.presentation.addition.model.AddTaskViewState
+import com.shopper.presentation.extension.InstantTaskExecutorExtension
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

@@ -1,11 +1,11 @@
-package com.shopper.app.presentation.list
+package com.shopper.presentation.products
 
 import androidx.lifecycle.ViewModel
-import com.shopper.app.presentation.list.model.TasksViewState
-import com.shopper.app.view.list.model.TaskViewItem
 import com.shopper.domain.DispatcherProvider
 import com.shopper.domain.interactor.GetProducts
 import com.shopper.domain.model.Product
+import com.shopper.presentation.products.model.ProductView
+import com.shopper.presentation.products.model.TasksViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
@@ -45,10 +45,10 @@ class TasksViewModel @Inject constructor(
             }
     }
 
-    private fun mapTasks(products: List<Product>): List<TaskViewItem> {
+    private fun mapTasks(products: List<Product>): List<ProductView> {
         return products.map { product ->
-            TaskViewItem(
-                title = product.name,
+            ProductView(
+                name = product.name,
             )
         }
     }

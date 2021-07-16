@@ -44,6 +44,7 @@ dependencies {
     testImplementation testDependencies.jupiterApi
     testImplementation testDependencies.jupiterParams
     testImplementation testDependencies.coroutines
+    testImplementation testDependencies.orbit
     testImplementation testDependencies.assertJ
     testImplementation testDependencies.mockitoKotlin
     testRuntimeOnly testDependencies.jupiterEngine

@@ -1,4 +1,4 @@
-package com.shopper.app.presentation.addition.model
+package com.shopper.presentation.addition.model
 
 sealed class AddTaskViewState {
     object Idle : AddTaskViewState()

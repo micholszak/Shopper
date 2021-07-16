@@ -1,12 +1,12 @@
-package com.shopper.app.presentation.addition
+package com.shopper.presentation.addition
 
 import androidx.lifecycle.ViewModel
-import com.shopper.app.presentation.addition.model.AddTaskSideEffect
-import com.shopper.app.presentation.addition.model.AddTaskViewState
 import com.shopper.domain.DispatcherProvider
 import com.shopper.domain.interactor.AddProduct
 import com.shopper.domain.model.AddProductResult
 import com.shopper.domain.model.Product
+import com.shopper.presentation.addition.model.AddTaskSideEffect
+import com.shopper.presentation.addition.model.AddTaskViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost

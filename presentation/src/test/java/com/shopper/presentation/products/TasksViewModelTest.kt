@@ -1,11 +1,11 @@
-package com.shopper.app.presentation.list
+package com.shopper.presentation.products
 
-import com.shopper.app.InstantTaskExecutorExtension
-import com.shopper.app.presentation.list.model.TasksViewState
-import com.shopper.app.view.list.model.TaskViewItem
 import com.shopper.domain.interactor.GetProducts
 import com.shopper.domain.model.Product
 import com.shopper.domain.test.TestDispatcherProvider
+import com.shopper.presentation.extension.InstantTaskExecutorExtension
+import com.shopper.presentation.products.model.ProductView
+import com.shopper.presentation.products.model.TasksViewState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import org.junit.jupiter.api.Test
@@ -90,8 +90,8 @@ class TasksViewModelTest {
             Product("$index")
         }
 
-    private fun createTaskViewItems(size: Int = DEFAULT_SIZE): List<TaskViewItem> =
+    private fun createTaskViewItems(size: Int = DEFAULT_SIZE): List<ProductView> =
         List(size) { index ->
-            TaskViewItem(title = "$index")
+            ProductView(name = "$index")
         }
 }
