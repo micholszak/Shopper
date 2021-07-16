@@ -29,6 +29,5 @@ dependencies {
     implementation applicationDependencies.kotlin
     implementation coroutineDependencies.core
     implementation testDependencies.coroutines
-    implementation testDependencies.jupiterApi
     implementation project(":domain")
 }

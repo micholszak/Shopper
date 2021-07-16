@@ -31,21 +31,19 @@ class AddTaskViewModel @Inject constructor(
             )
         )
 
-    // todo why can't I post side effect in reduce block?
     fun addProductWith(name: String) = intent {
         reduce {
             AddTaskViewState.Pending
         }
         val product = Product(name)
-        val result = addProduct.execute(product)
-        reduce {
-            when (result) {
-                is AddProductResult.Success -> AddTaskViewState.Added
-                is AddProductResult.Failure -> AddTaskViewState.Idle
+        when (addProduct.execute(product)) {
+            is AddProductResult.Success -> {
+                reduce { AddTaskViewState.Added }
             }
-        }
-        if (result is AddProductResult.Failure) {
-            postSideEffect(AddTaskSideEffect.EmptyFieldError)
+            is AddProductResult.Failure -> {
+                postSideEffect(AddTaskSideEffect.EmptyFieldError)
+                reduce { AddTaskViewState.Idle }
+            }
         }
     }
 }
