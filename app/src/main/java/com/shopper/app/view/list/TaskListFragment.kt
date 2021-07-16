@@ -14,8 +14,8 @@ import com.shopper.app.view.common.adapter.ItemAdapter
 import com.shopper.app.view.common.binding.viewBinding
 import com.shopper.app.view.list.adapter.createTaskDelegate
 import com.shopper.app.view.list.model.TaskViewItem
-import com.shopper.presentation.products.TasksViewModel
-import com.shopper.presentation.products.model.TasksViewState
+import com.shopper.presentation.products.ProductsViewModel
+import com.shopper.presentation.products.model.ProductsState
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator
 import kotlinx.coroutines.flow.collect
@@ -26,7 +26,7 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list) {
     private var listAdapter: ItemAdapter? = null
     private val binding: FragmentTaskListBinding by viewBinding(FragmentTaskListBinding::bind)
 
-    private val viewModel: TasksViewModel by viewModels()
+    private val viewModel: ProductsViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,8 +54,8 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list) {
         }
     }
 
-    private fun render(state: TasksViewState) {
-        listAdapter?.items = state.tasks.map { productView ->
+    private fun render(state: ProductsState) {
+        listAdapter?.items = state.products.map { productView ->
             TaskViewItem(title = productView.name)
         }
     }

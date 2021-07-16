@@ -5,7 +5,7 @@ import com.shopper.domain.DispatcherProvider
 import com.shopper.domain.interactor.GetProducts
 import com.shopper.domain.model.Product
 import com.shopper.presentation.products.model.ProductView
-import com.shopper.presentation.products.model.TasksViewState
+import com.shopper.presentation.products.model.ProductsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
@@ -17,14 +17,14 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class TasksViewModel @Inject constructor(
+class ProductsViewModel @Inject constructor(
     private val getProducts: GetProducts,
     dispatcherProvider: DispatcherProvider,
-) : ViewModel(), ContainerHost<TasksViewState, Unit> {
+) : ViewModel(), ContainerHost<ProductsState, Unit> {
 
-    override val container: Container<TasksViewState, Unit> =
+    override val container: Container<ProductsState, Unit> =
         container(
-            initialState = TasksViewState(),
+            initialState = ProductsState(),
             settings = Container.Settings(
                 backgroundDispatcher = dispatcherProvider.io,
                 orbitDispatcher = dispatcherProvider.default
@@ -38,9 +38,7 @@ class TasksViewModel @Inject constructor(
             .map(::mapTasks)
             .collect { items ->
                 reduce {
-                    state.copy(
-                        tasks = items
-                    )
+                    state.copy(products = items)
                 }
             }
     }

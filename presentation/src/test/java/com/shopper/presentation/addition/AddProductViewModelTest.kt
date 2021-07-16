@@ -3,8 +3,8 @@ package com.shopper.presentation.addition
 import com.shopper.domain.interactor.AddProduct
 import com.shopper.domain.model.AddProductResult
 import com.shopper.domain.test.TestDispatcherProvider
-import com.shopper.presentation.addition.model.AddTaskSideEffect
-import com.shopper.presentation.addition.model.AddTaskViewState
+import com.shopper.presentation.addition.model.AddProductEffect
+import com.shopper.presentation.addition.model.AddProductState
 import com.shopper.presentation.extension.InstantTaskExecutorExtension
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Test
@@ -24,52 +24,52 @@ class AddProductViewModelTest {
 
     @Test
     fun `Start with initial state`() {
-        val initialState = AddTaskViewState.Idle
-        val viewModel = AddTaskViewModel(mockAddProduct, dispatcherProvider)
-            .test(AddTaskViewState.Idle)
+        val initialState = AddProductState.Idle
+        val viewModel = AddProductViewModel(mockAddProduct, dispatcherProvider)
+            .test(AddProductState.Idle)
 
         viewModel.assert(initialState)
     }
 
     @Test
-    fun `Emit error event given that adding task fails`() {
+    fun `Emit error event given that adding product fails`() {
         runBlockingTest {
-            givenAddProductsReturns(with = AddProductResult.Failure("empty field"))
+            givenAddProductsReturnsWith(result = AddProductResult.Failure("empty field"))
 
-            val initialState = AddTaskViewState.Idle
-            val viewModel = AddTaskViewModel(mockAddProduct, dispatcherProvider)
+            val initialState = AddProductState.Idle
+            val viewModel = AddProductViewModel(mockAddProduct, dispatcherProvider)
                 .test(initialState)
             viewModel.addProductWith(name = "")
             viewModel.assert(initialState) {
                 states(
-                    { AddTaskViewState.Pending },
-                    { AddTaskViewState.Idle }
+                    { AddProductState.Pending },
+                    { AddProductState.Idle }
                 )
                 postedSideEffects(
-                    AddTaskSideEffect.EmptyFieldError,
+                    AddProductEffect.EmptyFieldError,
                 )
             }
         }
     }
 
     @Test
-    fun `Indicate task added to view`() {
+    fun `Indicate product added to view`() {
         runBlockingTest {
-            givenAddProductsReturns(with = AddProductResult.Success)
-            val initialState = AddTaskViewState.Idle
-            val viewModel = AddTaskViewModel(mockAddProduct, dispatcherProvider)
+            givenAddProductsReturnsWith(result = AddProductResult.Success)
+            val initialState = AddProductState.Idle
+            val viewModel = AddProductViewModel(mockAddProduct, dispatcherProvider)
                 .test(initialState)
             viewModel.addProductWith("some name")
             viewModel.assert(initialState) {
                 states(
-                    { AddTaskViewState.Pending },
-                    { AddTaskViewState.Added }
+                    { AddProductState.Pending },
+                    { AddProductState.Added }
                 )
             }
         }
     }
 
-    private suspend fun givenAddProductsReturns(with: AddProductResult) {
-        whenever(mockAddProduct.execute(any())).doReturn(with)
+    private suspend fun givenAddProductsReturnsWith(result: AddProductResult) {
+        whenever(mockAddProduct.execute(any())).doReturn(result)
     }
 }

@@ -49,7 +49,6 @@ dependencies {
     implementation project(":domain")
     implementation project(":presentation")
     implementation applicationDependencies.kotlin
-    implementation lifecycleDependencies.viewModel
     implementation lifecycleDependencies.runtime
     implementation lifecycleDependencies.commonJava8
     implementation lifecycleDependencies.extensions
@@ -67,28 +66,10 @@ dependencies {
     implementation coroutineDependencies.core
     implementation coroutineDependencies.android
     implementation coroutineDependencies.orbitCore
-    implementation coroutineDependencies.orbitViewModel
 
     implementation hiltAndroidDependencies.hiltAndroid
     kapt hiltCompilers.hiltAndroidCompiler
     kapt hiltCompilers.hiltAndroidxCompiler
-
-    testImplementation testDependencies.jupiterApi
-    testImplementation testDependencies.jupiterParams
-    testImplementation testDependencies.coroutines
-    testImplementation testDependencies.assertJ
-    testImplementation testDependencies.turbine
-    testImplementation testDependencies.mockitoKotlin
-    testImplementation testDependencies.androidxArch
-    testImplementation testDependencies.orbit
-    testRuntimeOnly testDependencies.jupiterEngine
-    testImplementation project(":domain-test")
-
-    androidTestImplementation androidTestDependencies.jUnit
-    androidTestImplementation androidTestDependencies.turbine
-    androidTestImplementation androidTestDependencies.assertJ
-    androidTestImplementation androidTestDependencies.jUnitExtension
-    androidTestImplementation androidTestDependencies.espresso
 
     coreLibraryDesugaring applicationDependencies.desugaring
 }
