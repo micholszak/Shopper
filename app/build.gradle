@@ -46,6 +46,7 @@ android {
 
 dependencies {
     implementation project(":cache")
+    implementation project(":domain")
     implementation applicationDependencies.kotlin
     implementation lifecycleDependencies.viewModel
     implementation lifecycleDependencies.runtime
@@ -80,6 +81,7 @@ dependencies {
     testImplementation testDependencies.androidxArch
     testImplementation testDependencies.orbit
     testRuntimeOnly testDependencies.jupiterEngine
+    testImplementation project(":domain-test")
 
     androidTestImplementation androidTestDependencies.jUnit
     androidTestImplementation androidTestDependencies.turbine

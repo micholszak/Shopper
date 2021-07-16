@@ -38,7 +38,7 @@ class AddTaskSheetFragment : BottomSheetDialogFragment() {
         binding.title.showSoftInputInDialog()
         binding.createButton.setOnClickListener {
             val text = binding.title.text?.toString().orEmpty()
-            addTaskViewModel.addTaskWith(text)
+            addTaskViewModel.addProductWith(text)
         }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             addTaskViewModel.container.stateFlow.collect(::render)

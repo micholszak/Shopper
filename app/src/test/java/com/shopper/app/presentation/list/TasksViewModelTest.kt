@@ -1,11 +1,11 @@
 package com.shopper.app.presentation.list
 
-import com.shopper.app.domain.InstantTaskExecutorExtension
-import com.shopper.app.domain.TestDispatcherProvider
-import com.shopper.app.domain.interactor.GetTasks
-import com.shopper.app.domain.model.Task
+import com.shopper.app.InstantTaskExecutorExtension
 import com.shopper.app.presentation.list.model.TasksViewState
 import com.shopper.app.view.list.model.TaskViewItem
+import com.shopper.domain.interactor.GetProducts
+import com.shopper.domain.model.Product
+import com.shopper.domain.test.TestDispatcherProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import org.junit.jupiter.api.Test
@@ -24,12 +24,12 @@ class TasksViewModelTest {
         private const val DEFAULT_SIZE = 5
     }
 
-    private val mockGetTasks: GetTasks = mock()
+    private val mockGetTasks: GetProducts = mock()
     private val dispatcherProvider = TestDispatcherProvider()
 
     @Test
     fun `Start requesting for database updates during initialisation`() {
-        givenThatGetTasksReturnsWith(flowOf(emptyList()))
+        givenThatGetProductsReturns(flowOf(emptyList()))
         val initialState = TasksViewState()
         val viewModel = TasksViewModel(mockGetTasks, dispatcherProvider).test(
             initialState = initialState,
@@ -37,13 +37,13 @@ class TasksViewModelTest {
         )
 
         viewModel.assert(initialState)
-        verify(mockGetTasks).invoke()
+        verify(mockGetTasks).execute()
     }
 
     @Test
     fun `Update the list with new values`() {
-        val firstTasks = createTasks()
-        givenThatGetTasksReturnsWith(flowOf(firstTasks))
+        val firstTasks = createProduct()
+        givenThatGetProductsReturns(flowOf(firstTasks))
 
         val initialState = TasksViewState()
         val viewModel = TasksViewModel(mockGetTasks, dispatcherProvider).test(
@@ -59,11 +59,11 @@ class TasksViewModelTest {
 
     @Test
     fun `Update state after database update`() {
-        givenThatGetTasksReturnsWith(
-            flowOf(
-                createTasks(5),
-                createTasks(6),
-                createTasks(7)
+        givenThatGetProductsReturns(
+            with = flowOf(
+                createProduct(5),
+                createProduct(6),
+                createProduct(7)
             )
         )
 
@@ -81,13 +81,13 @@ class TasksViewModelTest {
         }
     }
 
-    private fun givenThatGetTasksReturnsWith(tasksFlow: Flow<List<Task>>) {
-        whenever(mockGetTasks.invoke()).doReturn(tasksFlow)
+    private fun givenThatGetProductsReturns(with: Flow<List<Product>>) {
+        whenever(mockGetTasks.execute()).doReturn(with)
     }
 
-    private fun createTasks(size: Int = DEFAULT_SIZE): List<Task> =
+    private fun createProduct(size: Int = DEFAULT_SIZE): List<Product> =
         List(size) { index ->
-            Task("$index")
+            Product("$index")
         }
 
     private fun createTaskViewItems(size: Int = DEFAULT_SIZE): List<TaskViewItem> =
