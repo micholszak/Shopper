@@ -2,24 +2,24 @@ ext {
     minSdkVersion = 21
     targetSdkVersion = 30
 
-    kotlin_version = '1.5.0'
+    kotlin_version = '1.5.21'
     dependency_version = '0.38.0'
     lifecycle_version = "2.3.1"
     nav_version = "2.3.5"
     room_version = "2.3.0"
     junit5_version = "5.7.2"
-    coroutines_version = "1.5.0"
-    orbit_version = "3.1.1"
-    assertj_version = "3.19.0"
+    coroutines_version = "1.5.1"
+    orbit_version = "4.2.0"
+    assertj_version = "3.20.2"
     dependency_analysis_version = "0.73.0"
     ktlint_plugin_version = "10.0.0"
     gradle_doctor_version = "0.7.0"
 
-    hilt_version = "2.35.1"
+    hilt_version = "2.38.1"
     hilt_compiler_version = "1.0.0"
 
     projectPlugins = [
-            "com.android.tools.build:gradle:4.2.1",
+            "com.android.tools.build:gradle:7.0.0",
             "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version",
             "com.google.dagger:hilt-android-gradle-plugin:$hilt_version",
             "de.mannodermaus.gradle.plugins:android-junit5:1.7.1.1",

@@ -2,13 +2,14 @@ package com.shopper.presentation.products
 
 import com.shopper.domain.interactor.GetProducts
 import com.shopper.domain.model.Product
-import com.shopper.presentation.extension.InstantTaskExecutorExtension
 import com.shopper.presentation.products.model.ProductView
 import com.shopper.presentation.products.model.ProductViewMapper
 import com.shopper.presentation.products.model.ProductsState
 import com.shopper.test.utils.TestDispatcherProvider
+import com.shopper.test.utils.extension.InstantTaskExecutorExtension
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -16,7 +17,6 @@ import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import org.orbitmvi.orbit.assert
 import org.orbitmvi.orbit.test
 
 @ExtendWith(InstantTaskExecutorExtension::class)
@@ -41,37 +41,33 @@ class ProductsViewModelTest {
     }
 
     @Test
-    fun `Start requesting for updates during initialisation`() {
+    fun `Start requesting for updates during initialisation`() = runBlockingTest {
         givenThatGetProductsReturnsWith(flowOf(emptyList()))
         val initialState = ProductsState()
-        systemUnderTest.test(
-            initialState = initialState,
-            runOnCreate = true
-        )
+        systemUnderTest.test(initialState = initialState)
+            .runOnCreate()
+            .assert(initialState)
 
-        systemUnderTest.assert(initialState)
         verify(mockGetProducts).execute()
     }
 
     @Test
-    fun `Update the list with new values`() {
+    fun `Update the list with new values`() = runBlockingTest {
         val firstTasks = buildProducts()
         givenThatGetProductsReturnsWith(flowOf(firstTasks))
 
         val initialState = ProductsState()
-        systemUnderTest.test(
-            initialState = initialState,
-            runOnCreate = true
-        )
-        systemUnderTest.assert(initialState) {
-            states(
-                { ProductsState(products = createTaskViewItems()) }
-            )
-        }
+        systemUnderTest.test(initialState = initialState)
+            .runOnCreate()
+            .assert(initialState) {
+                states(
+                    { ProductsState(products = createTaskViewItems()) }
+                )
+            }
     }
 
     @Test
-    fun `Update state after database update`() {
+    fun `Update state after database update`() = runBlockingTest {
         givenThatGetProductsReturnsWith(
             flowOf(
                 buildProducts(5),
@@ -81,17 +77,15 @@ class ProductsViewModelTest {
         )
 
         val initialState = ProductsState()
-        systemUnderTest.test(
-            initialState = initialState,
-            runOnCreate = true
-        )
-        systemUnderTest.assert(initialState) {
-            states(
-                { ProductsState(products = createTaskViewItems(5)) },
-                { ProductsState(products = createTaskViewItems(6)) },
-                { ProductsState(products = createTaskViewItems(7)) }
-            )
-        }
+        systemUnderTest.test(initialState = initialState)
+            .runOnCreate()
+            .assert(initialState) {
+                states(
+                    { ProductsState(products = createTaskViewItems(5)) },
+                    { ProductsState(products = createTaskViewItems(6)) },
+                    { ProductsState(products = createTaskViewItems(7)) }
+                )
+            }
     }
 
     private fun givenThatGetProductsReturnsWith(flow: Flow<List<Product>>) {

@@ -26,8 +26,7 @@ class AddProductViewModel @Inject constructor(
         container(
             initialState = AddProductState.Idle,
             settings = Container.Settings(
-                backgroundDispatcher = dispatcherProvider.io,
-                orbitDispatcher = dispatcherProvider.default,
+                intentDispatcher = dispatcherProvider.io,
             )
         )
 

@@ -29,5 +29,7 @@ dependencies {
     implementation applicationDependencies.kotlin
     implementation coroutineDependencies.core
     implementation testDependencies.coroutines
+    implementation testDependencies.jupiterApi
+    implementation testDependencies.androidxArch
     implementation project(":domain")
 }

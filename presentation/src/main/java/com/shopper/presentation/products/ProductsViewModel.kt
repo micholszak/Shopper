@@ -26,8 +26,7 @@ class ProductsViewModel @Inject constructor(
         container(
             initialState = ProductsState(),
             settings = Container.Settings(
-                backgroundDispatcher = dispatcherProvider.io,
-                orbitDispatcher = dispatcherProvider.default
+                intentDispatcher = dispatcherProvider.io,
             )
         ) {
             subscribeToProductUpdates()
