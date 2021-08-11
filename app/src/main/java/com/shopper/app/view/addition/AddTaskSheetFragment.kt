@@ -10,13 +10,13 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.shopper.app.R
 import com.shopper.app.databinding.FragmentAddTaskSheetBinding
-import com.shopper.app.presentation.addition.AddTaskViewModel
-import com.shopper.app.presentation.addition.model.AddTaskSideEffect
-import com.shopper.app.presentation.addition.model.AddTaskViewState
 import com.shopper.app.view.common.binding.viewBinding
 import com.shopper.app.view.common.hideSoftInputFromDialog
 import com.shopper.app.view.common.showSoftInputInDialog
 import com.shopper.app.view.common.toast
+import com.shopper.presentation.addition.AddProductViewModel
+import com.shopper.presentation.addition.model.AddProductEffect
+import com.shopper.presentation.addition.model.AddProductState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.collect
 class AddTaskSheetFragment : BottomSheetDialogFragment() {
 
     private val binding: FragmentAddTaskSheetBinding by viewBinding(FragmentAddTaskSheetBinding::bind)
-    private val addTaskViewModel: AddTaskViewModel by viewModels()
+    private val addProductViewModel: AddProductViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,34 +38,34 @@ class AddTaskSheetFragment : BottomSheetDialogFragment() {
         binding.title.showSoftInputInDialog()
         binding.createButton.setOnClickListener {
             val text = binding.title.text?.toString().orEmpty()
-            addTaskViewModel.addProductWith(text)
+            addProductViewModel.addProductWith(text)
         }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            addTaskViewModel.container.stateFlow.collect(::render)
+            addProductViewModel.container.stateFlow.collect(::render)
         }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            addTaskViewModel.container.sideEffectFlow.collect(::displaySideEffect)
+            addProductViewModel.container.sideEffectFlow.collect(::displaySideEffect)
         }
     }
 
-    private fun render(state: AddTaskViewState) {
+    private fun render(state: AddProductState) {
         when (state) {
-            AddTaskViewState.Idle -> {
+            AddProductState.Idle -> {
                 binding.createButton.isClickable = true
             }
-            AddTaskViewState.Pending -> {
+            AddProductState.Pending -> {
                 binding.createButton.isClickable = false
             }
-            AddTaskViewState.Added -> {
+            AddProductState.Added -> {
                 dismiss()
             }
         }
     }
 
     // todo extract proper error message, error should be cleared or moved to state handling
-    private fun displaySideEffect(sideEffect: AddTaskSideEffect) {
+    private fun displaySideEffect(sideEffect: AddProductEffect) {
         when (sideEffect) {
-            AddTaskSideEffect.EmptyFieldError -> {
+            AddProductEffect.EmptyFieldError -> {
                 toast("Title should not be empty")
             }
         }

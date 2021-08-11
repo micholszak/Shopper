@@ -30,8 +30,13 @@ android {
 
 dependencies {
     implementation applicationDependencies.kotlin
+    implementation lifecycleDependencies.viewModel
     implementation coroutineDependencies.core
-    implementation project(":cache")
+    implementation project(":domain")
+
+    implementation coroutineDependencies.orbitCore
+    implementation coroutineDependencies.orbitViewModel
+    implementation coroutineDependencies.core
 
     implementation hiltAndroidDependencies.hiltAndroid
     kapt hiltCompilers.hiltCompiler
@@ -40,6 +45,7 @@ dependencies {
     testImplementation testDependencies.jupiterApi
     testImplementation testDependencies.jupiterParams
     testImplementation testDependencies.coroutines
+    testImplementation testDependencies.orbit
     testImplementation testDependencies.assertJ
     testImplementation testDependencies.mockitoKotlin
     testRuntimeOnly testDependencies.jupiterEngine
