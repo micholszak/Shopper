@@ -2,7 +2,7 @@ package com.shopper.presentation.addition
 
 import com.shopper.domain.interactor.AddProduct
 import com.shopper.domain.model.AddProductResult
-import com.shopper.domain.test.TestDispatcherProvider
+import com.shopper.test.utils.TestDispatcherProvider
 import com.shopper.presentation.addition.model.AddProductEffect
 import com.shopper.presentation.addition.model.AddProductState
 import com.shopper.presentation.extension.InstantTaskExecutorExtension

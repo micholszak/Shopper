@@ -2,7 +2,7 @@ package com.shopper.presentation.products
 
 import com.shopper.domain.interactor.GetProducts
 import com.shopper.domain.model.Product
-import com.shopper.domain.test.TestDispatcherProvider
+import com.shopper.test.utils.TestDispatcherProvider
 import com.shopper.presentation.extension.InstantTaskExecutorExtension
 import com.shopper.presentation.products.model.ProductView
 import com.shopper.presentation.products.model.ProductsState
