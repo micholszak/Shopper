@@ -3,8 +3,7 @@ package com.shopper.presentation.products
 import androidx.lifecycle.ViewModel
 import com.shopper.domain.DispatcherProvider
 import com.shopper.domain.interactor.GetProducts
-import com.shopper.domain.model.Product
-import com.shopper.presentation.products.model.ProductView
+import com.shopper.presentation.products.model.ProductViewMapper
 import com.shopper.presentation.products.model.ProductsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -19,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductsViewModel @Inject constructor(
     private val getProducts: GetProducts,
+    private val productViewMapper: ProductViewMapper,
     dispatcherProvider: DispatcherProvider,
 ) : ViewModel(), ContainerHost<ProductsState, Unit> {
 
@@ -35,19 +35,11 @@ class ProductsViewModel @Inject constructor(
 
     private fun subscribeToProductUpdates() = intent {
         getProducts.execute()
-            .map(::mapTasks)
+            .map(productViewMapper::map)
             .collect { items ->
                 reduce {
                     state.copy(products = items)
                 }
             }
-    }
-
-    private fun mapTasks(products: List<Product>): List<ProductView> {
-        return products.map { product ->
-            ProductView(
-                name = product.name,
-            )
-        }
     }
 }

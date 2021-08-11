@@ -2,12 +2,14 @@ package com.shopper.presentation.products
 
 import com.shopper.domain.interactor.GetProducts
 import com.shopper.domain.model.Product
-import com.shopper.test.utils.TestDispatcherProvider
 import com.shopper.presentation.extension.InstantTaskExecutorExtension
 import com.shopper.presentation.products.model.ProductView
+import com.shopper.presentation.products.model.ProductViewMapper
 import com.shopper.presentation.products.model.ProductsState
+import com.shopper.test.utils.TestDispatcherProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.doReturn
@@ -27,16 +29,27 @@ class ProductsViewModelTest {
     private val mockGetProducts: GetProducts = mock()
     private val dispatcherProvider = TestDispatcherProvider()
 
+    private lateinit var systemUnderTest: ProductsViewModel
+
+    @BeforeEach
+    fun setup() {
+        systemUnderTest = ProductsViewModel(
+            getProducts = mockGetProducts,
+            productViewMapper = ProductViewMapper(),
+            dispatcherProvider = dispatcherProvider
+        )
+    }
+
     @Test
     fun `Start requesting for updates during initialisation`() {
         givenThatGetProductsReturnsWith(flowOf(emptyList()))
         val initialState = ProductsState()
-        val viewModel = ProductsViewModel(mockGetProducts, dispatcherProvider).test(
+        systemUnderTest.test(
             initialState = initialState,
             runOnCreate = true
         )
 
-        viewModel.assert(initialState)
+        systemUnderTest.assert(initialState)
         verify(mockGetProducts).execute()
     }
 
@@ -46,11 +59,11 @@ class ProductsViewModelTest {
         givenThatGetProductsReturnsWith(flowOf(firstTasks))
 
         val initialState = ProductsState()
-        val viewModel = ProductsViewModel(mockGetProducts, dispatcherProvider).test(
+        systemUnderTest.test(
             initialState = initialState,
             runOnCreate = true
         )
-        viewModel.assert(initialState) {
+        systemUnderTest.assert(initialState) {
             states(
                 { ProductsState(products = createTaskViewItems()) }
             )
@@ -68,11 +81,11 @@ class ProductsViewModelTest {
         )
 
         val initialState = ProductsState()
-        val viewModel = ProductsViewModel(mockGetProducts, dispatcherProvider).test(
+        systemUnderTest.test(
             initialState = initialState,
             runOnCreate = true
         )
-        viewModel.assert(initialState) {
+        systemUnderTest.assert(initialState) {
             states(
                 { ProductsState(products = createTaskViewItems(5)) },
                 { ProductsState(products = createTaskViewItems(6)) },

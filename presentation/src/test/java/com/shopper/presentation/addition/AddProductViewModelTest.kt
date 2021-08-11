@@ -2,11 +2,12 @@ package com.shopper.presentation.addition
 
 import com.shopper.domain.interactor.AddProduct
 import com.shopper.domain.model.AddProductResult
-import com.shopper.test.utils.TestDispatcherProvider
 import com.shopper.presentation.addition.model.AddProductEffect
 import com.shopper.presentation.addition.model.AddProductState
 import com.shopper.presentation.extension.InstantTaskExecutorExtension
+import com.shopper.test.utils.TestDispatcherProvider
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.any
@@ -22,50 +23,53 @@ class AddProductViewModelTest {
     private val dispatcherProvider = TestDispatcherProvider()
     private val mockAddProduct: AddProduct = mock()
 
-    @Test
-    fun `Start with initial state`() {
-        val initialState = AddProductState.Idle
-        val viewModel = AddProductViewModel(mockAddProduct, dispatcherProvider)
-            .test(AddProductState.Idle)
+    private lateinit var systemUnderTest: AddProductViewModel
 
-        viewModel.assert(initialState)
+    @BeforeEach
+    fun setup() {
+        systemUnderTest = AddProductViewModel(
+            addProduct = mockAddProduct,
+            dispatcherProvider = dispatcherProvider
+        )
     }
 
     @Test
-    fun `Emit error event given that adding product fails`() {
-        runBlockingTest {
-            givenAddProductsReturnsWith(result = AddProductResult.Failure("empty field"))
+    fun `Start with initial state`() {
+        val initialState = AddProductState.Idle
+        systemUnderTest.test(AddProductState.Idle)
 
-            val initialState = AddProductState.Idle
-            val viewModel = AddProductViewModel(mockAddProduct, dispatcherProvider)
-                .test(initialState)
-            viewModel.addProductWith(name = "")
-            viewModel.assert(initialState) {
-                states(
-                    { AddProductState.Pending },
-                    { AddProductState.Idle }
-                )
-                postedSideEffects(
-                    AddProductEffect.EmptyFieldError,
-                )
-            }
+        systemUnderTest.assert(initialState)
+    }
+
+    @Test
+    fun `Emit error event given that adding product fails`() = runBlockingTest {
+        givenAddProductsReturnsWith(result = AddProductResult.Failure("empty field"))
+
+        val initialState = AddProductState.Idle
+        systemUnderTest.test(initialState)
+        systemUnderTest.addProductWith(name = "")
+        systemUnderTest.assert(initialState) {
+            states(
+                { AddProductState.Pending },
+                { AddProductState.Idle }
+            )
+            postedSideEffects(
+                AddProductEffect.EmptyFieldError,
+            )
         }
     }
 
     @Test
-    fun `Indicate product added to view`() {
-        runBlockingTest {
-            givenAddProductsReturnsWith(result = AddProductResult.Success)
-            val initialState = AddProductState.Idle
-            val viewModel = AddProductViewModel(mockAddProduct, dispatcherProvider)
-                .test(initialState)
-            viewModel.addProductWith("some name")
-            viewModel.assert(initialState) {
-                states(
-                    { AddProductState.Pending },
-                    { AddProductState.Added }
-                )
-            }
+    fun `Indicate product added to view`() = runBlockingTest {
+        givenAddProductsReturnsWith(result = AddProductResult.Success)
+        val initialState = AddProductState.Idle
+        systemUnderTest.test(initialState)
+        systemUnderTest.addProductWith("some name")
+        systemUnderTest.assert(initialState) {
+            states(
+                { AddProductState.Pending },
+                { AddProductState.Added }
+            )
         }
     }
 

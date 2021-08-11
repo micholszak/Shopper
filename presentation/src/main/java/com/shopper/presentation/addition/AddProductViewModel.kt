@@ -32,9 +32,7 @@ class AddProductViewModel @Inject constructor(
         )
 
     fun addProductWith(name: String) = intent {
-        reduce {
-            AddProductState.Pending
-        }
+        reduce { AddProductState.Pending }
         val product = Product(name)
         when (addProduct.execute(product)) {
             is AddProductResult.Success -> {
