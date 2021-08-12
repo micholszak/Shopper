@@ -38,7 +38,7 @@ internal class ProductDaoTest {
         val product = AddProductEntity(name = "orange")
         productDao.addProduct(product)
         productDao.getAllProducts().test {
-            val products = expectItem()
+            val products = awaitItem()
             assertThat(products).hasSize(1)
             assertThat(products[0].name).isEqualTo("orange")
         }
@@ -52,7 +52,7 @@ internal class ProductDaoTest {
         }
 
         productDao.getAllProducts().test {
-            val products = expectItem()
+            val products = awaitItem()
             assertThat(products).doesNotHaveDuplicates()
         }
     }
@@ -61,9 +61,9 @@ internal class ProductDaoTest {
     fun daoShouldSendAnUpdateEveryTimeWhenProductIsAdded() = runBlocking {
         productDao.getAllProducts().test {
             productDao.addProduct(entity = AddProductEntity(name = "orange"))
-            assertThat(expectItem()).hasSize(1)
+            assertThat(awaitItem()).hasSize(1)
             productDao.addProduct(entity = AddProductEntity(name = "apple"))
-            assertThat(expectItem()).hasSize(2)
+            assertThat(awaitItem()).hasSize(2)
         }
     }
 
@@ -71,7 +71,7 @@ internal class ProductDaoTest {
     fun changeCheckedStateOfRequestedItem() = runBlocking {
         productDao.addProduct(entity = AddProductEntity(name = "orange"))
         productDao.getAllProducts().test {
-            val orange = expectItem().first()
+            val orange = awaitItem().first()
             assertThat(orange.checked).isFalse
             productDao.updateChecked(
                 entity = CheckedProductEntity(
@@ -79,7 +79,7 @@ internal class ProductDaoTest {
                     checked = true
                 )
             )
-            val checkedOrange = expectItem().first()
+            val checkedOrange = awaitItem().first()
             assertThat(checkedOrange.checked).isTrue
         }
     }

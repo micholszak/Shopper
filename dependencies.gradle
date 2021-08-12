@@ -11,9 +11,9 @@ ext {
     coroutines_version = "1.5.1"
     orbit_version = "4.2.0"
     assertj_version = "3.20.2"
-    dependency_analysis_version = "0.73.0"
-    ktlint_plugin_version = "10.0.0"
-    gradle_doctor_version = "0.7.0"
+    dependency_analysis_version = "0.76.0"
+    ktlint_plugin_version = "10.1.0"
+    gradle_doctor_version = "0.7.1"
 
     hilt_version = "2.38.1"
     hilt_compiler_version = "1.0.0"
@@ -25,7 +25,7 @@ ext {
             "de.mannodermaus.gradle.plugins:android-junit5:1.7.1.1",
     ]
 
-    turbine = "app.cash.turbine:turbine:0.5.1"
+    turbine = "app.cash.turbine:turbine:0.6.0"
 
     hiltAndroidDependencies = [
             hiltAndroid: "com.google.dagger:hilt-android:$hilt_version",
@@ -72,7 +72,7 @@ ext {
     ]
 
     androidxCoreDependencies = [
-            core: "androidx.core:core-ktx:1.5.0",
+            core: "androidx.core:core-ktx:1.6.0",
             appCompat: "androidx.appcompat:appcompat:1.3.0",
             constraintLayout: "androidx.constraintlayout:constraintlayout:2.0.4",
     ]
@@ -94,7 +94,7 @@ ext {
             jUnit: "junit:junit:4.13.2",
             turbine: turbine,
             assertJ: "org.assertj:assertj-core:$assertj_version",
-            jUnitExtension: "androidx.test.ext:junit:1.1.2",
-            espresso: "androidx.test.espresso:espresso-core:3.3.0",
+            jUnitExtension: "androidx.test.ext:junit:1.1.3",
+            espresso: "androidx.test.espresso:espresso-core:3.4.0",
     ]
 }

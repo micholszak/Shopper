@@ -34,7 +34,7 @@ internal class ProductsRoomCacheTest {
         whenever(mockProductDao.getAllProducts()).thenReturn(flowOf(entities))
 
         productCache.getAllProducts().test {
-            val cachedProducts = expectItem()
+            val cachedProducts = awaitItem()
             assertThat(cachedProducts).hasSize(size)
             assertThat(cachedProducts).allMatch { cachedProduct ->
                 !cachedProduct.checked && cachedProduct.name == "orange"

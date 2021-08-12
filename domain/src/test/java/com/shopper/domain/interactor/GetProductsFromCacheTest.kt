@@ -34,8 +34,8 @@ internal class GetProductsFromCacheTest {
                 val expectedProducts = List(size) { index ->
                     Product(name = "$index")
                 }
-                assertThat(expectedProducts).isEqualTo(expectItem())
-                expectComplete()
+                assertThat(expectedProducts).isEqualTo(awaitItem())
+                awaitComplete()
             }
         }
     }
