@@ -1,5 +1,6 @@
 package com.shopper.app.view.addition
 
+import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.shopper.app.R
 import com.shopper.app.databinding.FragmentAddTaskSheetBinding
@@ -32,6 +35,15 @@ class AddTaskSheetFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? =
         inflater.inflate(R.layout.fragment_add_task_sheet, container, false)
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+
+        dialog.behavior.skipCollapsed = true
+        dialog.behavior.state = STATE_EXPANDED
+
+        return dialog
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

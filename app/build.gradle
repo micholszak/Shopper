@@ -58,6 +58,7 @@ dependencies {
     implementation androidxCoreDependencies.core
     implementation androidxCoreDependencies.appCompat
     implementation androidxCoreDependencies.constraintLayout
+    implementation androidxCoreDependencies.material
 
     implementation viewExtensionDependencies.adapterDelegates
     implementation viewExtensionDependencies.adapterDelegatesViewBinding
