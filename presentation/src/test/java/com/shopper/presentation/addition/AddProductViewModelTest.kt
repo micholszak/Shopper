@@ -40,41 +40,45 @@ class AddProductViewModelTest {
     }
 
     @Test
-    fun `Emit error event given that adding product fails`() = runTest {
-        givenAddProductsReturnsWith(result = AddProductResult.Failure("empty field"))
+    fun `Emit error event given that adding product fails`() {
+        runTest {
+            givenAddProductsReturnsWith(result = AddProductResult.Failure("empty field"))
 
-        val initialState = AddProductState.Idle
+            val initialState = AddProductState.Idle
 
-        val testContainer = systemUnderTest.test(initialState)
-        systemUnderTest.addProductWith(name = "")
+            val testContainer = systemUnderTest.test(initialState)
+            systemUnderTest.addProductWith(name = "")
 
-        testContainer.runOnCreate()
-            .assert(initialState) {
-                states(
-                    { AddProductState.Pending },
-                    { AddProductState.Idle }
-                )
-                postedSideEffects(
-                    AddProductEffect.EmptyFieldError,
-                )
-            }
+            testContainer.runOnCreate()
+                .assert(initialState) {
+                    states(
+                        { AddProductState.Pending },
+                        { AddProductState.Idle }
+                    )
+                    postedSideEffects(
+                        AddProductEffect.EmptyFieldError,
+                    )
+                }
+        }
     }
 
     @Test
-    fun `Indicate product added to view`() = runTest {
-        givenAddProductsReturnsWith(result = AddProductResult.Success)
-        val initialState = AddProductState.Idle
+    fun `Indicate product added to view`() {
+        runTest {
+            givenAddProductsReturnsWith(result = AddProductResult.Success)
+            val initialState = AddProductState.Idle
 
-        val testContainer = systemUnderTest.test(initialState)
-        systemUnderTest.addProductWith("some name")
+            val testContainer = systemUnderTest.test(initialState)
+            systemUnderTest.addProductWith("some name")
 
-        testContainer.runOnCreate()
-            .assert(initialState) {
-                states(
-                    { AddProductState.Pending },
-                    { AddProductState.Added }
-                )
-            }
+            testContainer.runOnCreate()
+                .assert(initialState) {
+                    states(
+                        { AddProductState.Pending },
+                        { AddProductState.Added }
+                    )
+                }
+        }
     }
 
     private suspend fun givenAddProductsReturnsWith(result: AddProductResult) {

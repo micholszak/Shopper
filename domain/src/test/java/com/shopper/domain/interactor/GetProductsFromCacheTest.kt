@@ -4,8 +4,9 @@ import app.cash.turbine.test
 import com.shopper.cache.ProductCache
 import com.shopper.cache.model.CachedProduct
 import com.shopper.domain.model.Product
+import com.shopper.test.utils.TestDispatcherProvider
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn
@@ -15,7 +16,10 @@ import org.mockito.kotlin.whenever
 internal class GetProductsFromCacheTest {
 
     private val mockProductCache: ProductCache = mock()
-    private val getProductsFromCache = GetProductsFromCache(mockProductCache)
+    private val getProductsFromCache = GetProductsFromCache(
+        productCache = mockProductCache,
+        dispatcherProvider = TestDispatcherProvider()
+    )
 
     @Test
     fun `Should map properly map products`() {
@@ -29,7 +33,7 @@ internal class GetProductsFromCacheTest {
         }
         whenever(mockProductCache.getAllProducts()).doReturn(flowOf(items))
 
-        runBlocking {
+        runTest {
             getProductsFromCache.execute().test {
                 val expectedProducts = List(size) { index ->
                     Product(name = "$index")

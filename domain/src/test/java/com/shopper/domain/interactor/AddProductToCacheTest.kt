@@ -4,7 +4,7 @@ import com.shopper.cache.ProductCache
 import com.shopper.domain.model.AddProductResult
 import com.shopper.domain.model.Product
 import com.shopper.test.utils.TestDispatcherProvider
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
@@ -21,7 +21,7 @@ internal class AddProductToCacheTest {
 
     @Test
     fun `End with failure when the product name is empty`() {
-        runBlocking {
+        runTest {
             val product = Product("")
 
             val result = addProduct.execute(product)
@@ -33,7 +33,7 @@ internal class AddProductToCacheTest {
 
     @Test
     fun `Successfully add product to cache`() {
-        runBlocking {
+        runTest {
             val product = Product("some name")
 
             val result = addProduct.execute(product)
