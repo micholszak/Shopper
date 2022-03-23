@@ -7,11 +7,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-@Module(
-    includes = [
-        InteractionModule::class
-    ]
-)
+@Module
 @InstallIn(SingletonComponent::class)
 abstract class ConcurrentModule {
 
