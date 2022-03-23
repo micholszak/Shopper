@@ -9,7 +9,7 @@ import com.shopper.test.utils.TestDispatcherProvider
 import com.shopper.test.utils.extension.InstantTaskExecutorExtension
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -41,7 +41,7 @@ class ProductsViewModelTest {
     }
 
     @Test
-    fun `Start requesting for updates during initialisation`() = runBlockingTest {
+    fun `Start requesting for updates during initialisation`() = runTest {
         givenThatGetProductsReturnsWith(flowOf(emptyList()))
         val initialState = ProductsState()
         systemUnderTest.test(initialState = initialState)
@@ -52,7 +52,7 @@ class ProductsViewModelTest {
     }
 
     @Test
-    fun `Update the list with new values`() = runBlockingTest {
+    fun `Update the list with new values`() = runTest {
         val firstTasks = buildProducts()
         givenThatGetProductsReturnsWith(flowOf(firstTasks))
 
@@ -67,7 +67,7 @@ class ProductsViewModelTest {
     }
 
     @Test
-    fun `Update state after database update`() = runBlockingTest {
+    fun `Update state after database update`() = runTest {
         givenThatGetProductsReturnsWith(
             flowOf(
                 buildProducts(5),

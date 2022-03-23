@@ -6,7 +6,7 @@ import com.shopper.presentation.addition.model.AddProductEffect
 import com.shopper.presentation.addition.model.AddProductState
 import com.shopper.test.utils.TestDispatcherProvider
 import com.shopper.test.utils.extension.InstantTaskExecutorExtension
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -40,7 +40,7 @@ class AddProductViewModelTest {
     }
 
     @Test
-    fun `Emit error event given that adding product fails`() = runBlockingTest {
+    fun `Emit error event given that adding product fails`() = runTest {
         givenAddProductsReturnsWith(result = AddProductResult.Failure("empty field"))
 
         val initialState = AddProductState.Idle
@@ -61,7 +61,7 @@ class AddProductViewModelTest {
     }
 
     @Test
-    fun `Indicate product added to view`() = runBlockingTest {
+    fun `Indicate product added to view`() = runTest {
         givenAddProductsReturnsWith(result = AddProductResult.Success)
         val initialState = AddProductState.Idle
 

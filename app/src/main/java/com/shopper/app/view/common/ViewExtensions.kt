@@ -7,7 +7,7 @@ fun View.showSoftInputInDialog() {
     if (isFocusable) {
         if (requestFocus()) {
             val inputManager: InputMethodManager? = context.systemService()
-            inputManager?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+            inputManager?.showSoftInput(this, 0)
         }
     }
 }
@@ -15,5 +15,5 @@ fun View.showSoftInputInDialog() {
 fun View.hideSoftInputFromDialog() {
     clearFocus()
     val inputManager: InputMethodManager? = context.systemService()
-    inputManager?.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+    inputManager?.hideSoftInputFromWindow(windowToken, 0)
 }
