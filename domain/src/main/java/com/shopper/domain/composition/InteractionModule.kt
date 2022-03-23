@@ -11,7 +11,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal abstract class InteractorModule {
+internal abstract class InteractionModule {
 
     @Binds
     abstract fun bindAddProduct(useCase: AddProductToCache): AddProduct

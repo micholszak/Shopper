@@ -28,8 +28,14 @@ android {
 dependencies {
     implementation applicationDependencies.kotlin
     implementation coroutineDependencies.core
-    implementation testDependencies.coroutines
-    implementation testDependencies.jupiterApi
     implementation testDependencies.androidxArch
-    implementation project(":domain")
+    api testDependencies.jupiterApi
+    api testDependencies.jupiterParams
+    api testDependencies.coroutines
+    api testDependencies.assertJ
+    api testDependencies.turbine
+    api testDependencies.mockitoKotlin
+    api testDependencies.orbit
+    runtimeOnly testDependencies.jupiterEngine
+    api project(":domain")
 }

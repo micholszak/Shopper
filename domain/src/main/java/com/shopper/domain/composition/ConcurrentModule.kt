@@ -9,7 +9,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module(
     includes = [
-        InteractorModule::class
+        InteractionModule::class
     ]
 )
 @InstallIn(SingletonComponent::class)

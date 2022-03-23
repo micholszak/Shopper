@@ -35,13 +35,6 @@ dependencies {
 
     implementation hiltAndroidDependencies.hiltAndroid
     kapt hiltCompilers.hiltCompiler
-
-    testImplementation testDependencies.turbine
-    testImplementation testDependencies.jupiterApi
-    testImplementation testDependencies.jupiterParams
-    testImplementation testDependencies.coroutines
-    testImplementation testDependencies.assertJ
-    testImplementation testDependencies.mockitoKotlin
-    testRuntimeOnly testDependencies.jupiterEngine
+    
     testImplementation project(':test-utils')
 }
