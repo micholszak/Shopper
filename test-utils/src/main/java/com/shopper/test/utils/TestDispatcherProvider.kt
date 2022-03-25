@@ -2,10 +2,10 @@ package com.shopper.test.utils
 
 import com.shopper.domain.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 
 class TestDispatcherProvider(
-    dispatcher: CoroutineDispatcher = TestCoroutineDispatcher()
+    dispatcher: CoroutineDispatcher = UnconfinedTestDispatcher()
 ) : DispatcherProvider {
 
     override val io: CoroutineDispatcher = dispatcher

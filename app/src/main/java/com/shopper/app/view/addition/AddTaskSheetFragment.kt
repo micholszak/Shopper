@@ -21,7 +21,6 @@ import com.shopper.presentation.addition.AddProductViewModel
 import com.shopper.presentation.addition.model.AddProductEffect
 import com.shopper.presentation.addition.model.AddProductState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class AddTaskSheetFragment : BottomSheetDialogFragment() {
@@ -62,13 +61,16 @@ class AddTaskSheetFragment : BottomSheetDialogFragment() {
 
     private fun render(state: AddProductState) {
         when (state) {
-            AddProductState.Idle -> {
+            is AddProductState.Idle -> {
                 binding.createButton.isClickable = true
             }
-            AddProductState.Pending -> {
+            is AddProductState.Pending -> {
                 binding.createButton.isClickable = false
             }
-            AddProductState.Added -> {
+            is AddProductState.Error -> {
+                binding.createButton.isClickable = false
+            }
+            is AddProductState.Added -> {
                 dismiss()
             }
         }

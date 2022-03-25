@@ -7,7 +7,11 @@ import com.shopper.domain.model.AddProductResult
 import com.shopper.domain.model.Product
 import com.shopper.presentation.addition.model.AddProductEffect
 import com.shopper.presentation.addition.model.AddProductState
+import com.shopper.presentation.addition.model.AddProductState.Added
+import com.shopper.presentation.addition.model.AddProductState.Error
+import com.shopper.presentation.addition.model.AddProductState.ErrorType.EMPTY_FIELD
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.flow
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -31,16 +35,17 @@ class AddProductViewModel @Inject constructor(
         )
 
     fun addProductWith(name: String) = intent {
-        reduce { AddProductState.Pending }
-        val product = Product(name)
-        when (addProduct.execute(product)) {
-            is AddProductResult.Success -> {
-                reduce { AddProductState.Added }
+        flow {
+            emit(AddProductState.Pending)
+            val product = Product(name)
+            val nextState = when (addProduct.execute(product)) {
+                is AddProductResult.Success -> Added
+                is AddProductResult.Failure -> Error(EMPTY_FIELD)
             }
-            is AddProductResult.Failure -> {
-                postSideEffect(AddProductEffect.EmptyFieldError)
-                reduce { AddProductState.Idle }
-            }
+            emit(nextState)
+        }.collect { state ->
+            reduce { state }
+            if (state is Error) postSideEffect(state.mapToSideEffect())
         }
     }
 }

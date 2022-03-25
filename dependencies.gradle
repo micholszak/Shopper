@@ -1,31 +1,31 @@
 ext {
     minSdkVersion = 21
-    targetSdkVersion = 30
+    targetSdkVersion = 31
 
-    kotlin_version = '1.5.31'
-    dependency_version = '0.39.0'
-    lifecycle_version = "2.3.1"
-    nav_version = "2.3.5"
-    room_version = "2.3.0"
-    junit5_version = "5.8.1"
-    coroutines_version = "1.5.2"
-    orbit_version = "4.2.0"
-    assertj_version = "3.20.2"
-    dependency_analysis_version = "0.78.0"
-    ktlint_plugin_version = "10.2.0"
-    gradle_doctor_version = "0.7.3"
+    kotlin_version = '1.6.10'
+    dependency_version = '0.42.0'
+    lifecycle_version = "2.4.1"
+    nav_version = "2.4.1"
+    room_version = "2.4.2"
+    junit5_version = "5.8.2"
+    coroutines_version = "1.6.0"
+    orbit_version = "4.3.2"
+    assertj_version = "3.22.0"
+    dependency_analysis_version = "0.80.0"
+    ktlint_plugin_version = "10.2.1"
+    gradle_doctor_version = "0.8.0"
 
-    hilt_version = "2.39.1"
+    hilt_version = "2.41"
     hilt_compiler_version = "1.0.0"
 
     projectPlugins = [
-            "com.android.tools.build:gradle:7.0.3",
+            "com.android.tools.build:gradle:7.1.2",
             "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version",
             "com.google.dagger:hilt-android-gradle-plugin:$hilt_version",
-            "de.mannodermaus.gradle.plugins:android-junit5:1.7.1.1",
+            "de.mannodermaus.gradle.plugins:android-junit5:1.8.2.0",
     ]
 
-    turbine = "app.cash.turbine:turbine:0.6.1"
+    turbine = "app.cash.turbine:turbine:0.7.0"
 
     hiltAndroidDependencies = [
             hiltAndroid: "com.google.dagger:hilt-android:$hilt_version",
@@ -38,7 +38,7 @@ ext {
 
     applicationDependencies = [
             kotlin: "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
-            desugaring: "com.android.tools:desugar_jdk_libs:1.0.10",
+            desugaring: "com.android.tools:desugar_jdk_libs:1.1.5",
     ]
 
     lifecycleDependencies = [
@@ -59,8 +59,8 @@ ext {
 
 
     viewExtensionDependencies = [
-            adapterDelegates: "com.hannesdorfmann:adapterdelegates4-kotlin-dsl:4.3.0",
-            adapterDelegatesViewBinding: "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.0",
+            adapterDelegates: "com.hannesdorfmann:adapterdelegates4-kotlin-dsl:4.3.2",
+            adapterDelegatesViewBinding: "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.2",
             recyclerAnimators:"jp.wasabeef:recyclerview-animators:4.0.2",
     ]
 
@@ -72,10 +72,10 @@ ext {
     ]
 
     androidxCoreDependencies = [
-            core: "androidx.core:core-ktx:1.6.0",
-            appCompat: "androidx.appcompat:appcompat:1.3.1",
-            constraintLayout: "androidx.constraintlayout:constraintlayout:2.1.1",
-            material: "com.google.android.material:material:1.4.0"
+            core: "androidx.core:core-ktx:1.7.0",
+            appCompat: "androidx.appcompat:appcompat:1.4.1",
+            constraintLayout: "androidx.constraintlayout:constraintlayout:2.1.3",
+            material: "com.google.android.material:material:1.5.0"
     ]
 
     testDependencies = [

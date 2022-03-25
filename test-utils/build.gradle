@@ -12,11 +12,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
         freeCompilerArgs += [
                 '-Xopt-in=kotlin.time.ExperimentalTime',
                 '-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi',
@@ -28,8 +28,14 @@ android {
 dependencies {
     implementation applicationDependencies.kotlin
     implementation coroutineDependencies.core
-    implementation testDependencies.coroutines
-    implementation testDependencies.jupiterApi
     implementation testDependencies.androidxArch
-    implementation project(":domain")
+    api testDependencies.jupiterApi
+    api testDependencies.jupiterParams
+    api testDependencies.coroutines
+    api testDependencies.assertJ
+    api testDependencies.turbine
+    api testDependencies.mockitoKotlin
+    api testDependencies.orbit
+    runtimeOnly testDependencies.jupiterEngine
+    api project(":domain")
 }

@@ -22,11 +22,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
         freeCompilerArgs += [
                 '-Xopt-in=kotlin.time.ExperimentalTime',
                 '-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi',
@@ -46,13 +46,7 @@ dependencies {
     implementation hiltAndroidDependencies.hiltAndroid
     kapt hiltCompilers.hiltCompiler
 
-    testImplementation testDependencies.jupiterApi
-    testImplementation testDependencies.jupiterParams
-    testImplementation testDependencies.coroutines
-    testImplementation testDependencies.assertJ
-    testImplementation testDependencies.turbine
-    testImplementation testDependencies.mockitoKotlin
-    testRuntimeOnly testDependencies.jupiterEngine
+    testImplementation project(":test-utils")
 
     androidTestImplementation androidTestDependencies.jUnit
     androidTestImplementation androidTestDependencies.turbine
